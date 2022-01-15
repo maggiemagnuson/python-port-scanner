@@ -49,6 +49,10 @@ if __name__ == '__main__':
 
     input = [i for i in range(1, 1000)]
     data = []
+    
+    ##############################################
+    # TEST RUN WITH CONCURRENCY
+    ##############################################
     print(f"Process started at: {datetime.now(pytz.timezone('America/Chicago'))}")
     with futures.ThreadPoolExecutor(max_workers=20) as executor:
         future_list = [executor.submit(scan_port, args.target, ip) for ip in input]
@@ -63,6 +67,10 @@ if __name__ == '__main__':
             
     print(f"Process stopped at: {datetime.now(pytz.timezone('America/Chicago'))}")
     print(data)
+    
+    ##############################################
+    # TEST RUN WITHOUT CONCURRENCY
+    ##############################################
     print(f"Process started at: {datetime.now(pytz.timezone('America/Chicago'))}")
     data_2 = []
     for port in input:
@@ -71,16 +79,4 @@ if __name__ == '__main__':
             data_2.append(res)
     print(f"Process stopped at: {datetime.now(pytz.timezone('America/Chicago'))}")
     print(data_2)
-    # try:
-
-    #     for port in range(1, 1000):
-    #         scan_port(args.target, port)
-    # except KeyboardInterrupt:
-    #     print("\n Exiting Program !!!!")
-    #     sys.exit()
-    # except socket.gaierror:
-    #     print("\n Hostname Could Not Be Resolved !!!!")
-    #     sys.exit()
-    # except socket.error:
-    #     print("\ Server not responding !!!!")
-    #     sys.exit()
+    
